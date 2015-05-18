@@ -1,0 +1,599 @@
+<div class="zmodule_content panel" id="zmodule_header_<@ ModuleName @>">
+<div class="panel-heading"> <img src="<@ ModuleIcon @>" width="35" height="35" border="0" alt="<@ ModuleName @>">
+    <div class="zmodule_title">
+        <@ ModuleName @>
+    </div>
+    <div class="zmodule_desc" id="zmodule_desc_<@ ModuleName @>">
+        <@ ModuleDesc @>
+    </div>
+</div>
+<p>&nbsp;</p>
+<@ Result @>
+<!-- delete warning --> <!-- Not working -->
+<!--<% if Confirm %>
+<div class="zform_wrapper alert alert-danger">
+        <h2>
+        <: Permanently Delete :>
+        ?</h2>
+    <p>
+        <: Please confirm that you want to permanently delete selected record. :>
+    </p>
+    <p><b>
+        <: WARNING! This will permanently remove this entry! :>
+        </b></p>
+    <form action="./?module=deleted_records_manager&action=Delete" method="post">
+        <table class="table table-striped" cellpadding="0" cellspacing="0">
+            <tr>
+                <th colspan="2" align="right">
+                	<input type="hidden" name="inDelete" value="<& delid &>">
+                    <input type="hidden" name="inTable" value="<& Table &>">
+                    <input type="hidden" name="inColumn" value="<& Column &>">
+                    <input type="hidden" name="inNullCol" value="<& NullCol &>">
+                    <button class="button-loader delete btn btn-danger" type="submit" >
+                    <: Delete :>
+                    </button>
+                    <button class="button-loader btn btn-default" type="button" onclick="window.location.href='./?module=deleted_records_manager';return false;">
+                    <: Cancel :>
+                    </button>
+                </th>
+            </tr>
+        </table>
+        <@ CSFR_Tag @>
+    </form>
+</div>
+<% endif %>-->
+<!-- Menu Start -->
+<div style="display: block;">
+    <div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="asTabs">
+        <!-- Nav tabs -->
+        <ul class="domains nav nav-tabs">
+            <li><a href="#clients" data-toggle="tab"><: Clients :></a></li>
+            <li><a href="#dbs" data-toggle="tab"><: Databases :></a></li>
+            <li><a href="#dbuser" data-toggle="tab"><: DB Users :></a></li>
+            <li><a href="#dns" data-toggle="tab"><: DNS :></a></li>
+            <li><a href="#vhosts" data-toggle="tab"><: VHosts :></a></li>
+            <li><a href="#ftps" data-toggle="tab"><: FTPs :></a></li>
+            <li><a href="#mboxs" data-toggle="tab"><: Mailboxes :></a></li>
+            <li><a href="#maliases" data-toggle="tab"><: Mail Aliases :></a></li>
+            <li><a href="#mfwds" data-toggle="tab"><: Mail Forwords :></a></li>
+            <li><a href="#distlist" data-toggle="tab"><: Distribution Lists :></a></li>
+            <li><a href="#distuser" data-toggle="tab"><: Distribution Users :></a></li>
+            <li><a href="#crons" data-toggle="tab"><: Cronjobs :></a></li>
+            <li><a href="#pkgs" data-toggle="tab"><: Packages :></a></li>
+        </ul>
+<!-- Menu End --> 
+    <!-- Tab Panes Start -->
+    <div class="tab-content"> 
+        <!-- Deleted Users -->
+        <div class="tab-pane active" id="clients">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted Clients :>
+                </h2>
+                <% if ClientList %>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+	                        <th><: UID :></th>
+                            <th><: Username :></th>
+                            <th><: Package :></th>
+                            <th><: Group :></th>
+                            <th><: Clients :></th>
+                            <th><: Current disk :></th>
+                            <th><: Current bandwidth :></th>
+                            <th></th>
+                        </tr>
+                        <% loop ClientList %>
+                        <tr>
+                        	<td><& userid &></td>
+                            <td><& username &></td>
+                            <td><& packagename &></td>
+                            <td><& usergroup &></td>
+                            <td><& numclients &></td>
+                            <td><& diskspacereadable &> / <& diskspacequotareadable &></td>
+                            <td><& bandwidthreadable &> / <& bandwidthquotareadable &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" id="button" name="inDelete" value="<& userid &>"><: Delete :></button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_accounts">
+                        <input type="hidden" name="inColumn" value="ac_id_pk">
+                        <input type="hidden" name="inNullCol" value="ac_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted client accounts at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted Databases -->
+        <div class="tab-pane active" id="dbs">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted Databases :>
+                </h2>
+                <% if ListDeletedDBs %>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: Client ID :></th>
+                            <th><: DB Name :></th>
+                            <th><: DB Space :></th>
+                            <th><: Created :></th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedDBs %>
+                        <tr>
+                            <td><& dbid &></td>
+                            <td><& dbuser &></td>
+                            <td><& dbname &></td>
+                            <td><& dbspace &></td>
+                            <td><& dbcreated &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dbid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_mysql_databases">
+                        <input type="hidden" name="inColumn" value="my_id_pk">
+                        <input type="hidden" name="inNullCol" value="my_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted databases to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted Db Users -->
+        <div class="tab-pane active" id="dbuser">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted Database Users :>
+                </h2>
+                <% if ListDeletedDBusers %>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: DB User Name :></th>
+                            <th><: Created :></th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedDBusers %>
+                        <tr>
+                            <td><& dbuserid &></td>
+                            <td><& dbusername &></td>
+                            <td><& dbusercreated &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dbuserid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_mysql_users">
+                        <input type="hidden" name="inColumn" value="mu_id_pk">
+                        <input type="hidden" name="inNullCol" value="mu_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted databases to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted DNS -->
+        <div class="tab-pane active" id="dns">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted DNS Records :>
+                </h2>
+                <% if ListDeletedDNS %>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: Client ID :></th>
+                            <th><: DNS Name :></th>
+                            <th><: DNS Type :></th>
+                            <th><: Created :></th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedDNS %>
+                        <tr>
+                            <td><& dnid &></td>
+                            <td><& dnuser &></td>
+                            <td><& dnname &></td>
+                            <td><& dntype &></td>
+                            <td><& dncreated &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dnid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_dns">
+                        <input type="hidden" name="inColumn" value="dn_id_pk">
+                        <input type="hidden" name="inNullCol" value="dn_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted DNS entries to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted Vhosts -->
+        <div class="tab-pane active" id="vhosts">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted Vhost Records :>
+                </h2>
+                <% if ListDeletedVhosts %>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: Client ID :></th>
+                            <th><: Vhost Name :></th>
+                            <th><: Created :></th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedVhosts %>
+                        <tr>
+                            <td><& vhid &></td>
+                            <td><& vhuser &></td>
+                            <td><& vhname &></td>
+                            <td><& vhcreated &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& vhid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_vhosts">
+                        <input type="hidden" name="inColumn" value="vh_id_pk">
+                        <input type="hidden" name="inNullCol" value="vh_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted Vhost to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted FTP -->
+        <div class="tab-pane active" id="ftps">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted FTP Records :>
+                </h2>
+                <% if ListDeletedFTPs %>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: Name :></th>
+                            <th><: Folder :></th>
+                            <th><: Created :></th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedFTPs %>
+                        <tr>
+                            <td><& ftpid &></td>
+                            <td><& ftpaccname &></td>
+                            <td><& ftpfolder &></td>
+                            <td><& ftpcreated &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& ftpid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_ftpaccounts">
+                        <input type="hidden" name="inColumn" value="ft_id_pk">
+                        <input type="hidden" name="inNullCol" value="ft_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted FTP accounts to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted mailboxes -->
+        <div class="tab-pane active" id="mboxs">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted Mailboxes :>
+                </h2>
+                <% if ListDeletedMboxes %>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: Address :></th>
+                            <th><: Created :></th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedMboxes %>
+                        <tr>
+                            <td><& mbid &></td>
+                            <td><& mbaddress &></td>
+                            <td><& mbcreated &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& mbid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_mailboxes">
+                        <input type="hidden" name="inColumn" value="mb_id_pk">
+                        <input type="hidden" name="inNullCol" value="mb_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted Mailboxes to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted mail aliases -->
+        <div class="tab-pane active" id="maliases">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted Mail Aliases :>
+                </h2>
+                <% if ListDeletedMalias %>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: Address :></th>
+                            <th><: Destination :></th>
+                            <th><: Created :></th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedMalias %>
+                        <tr>
+                            <td><& alid &></td>
+                            <td><& aladdress &></td>
+                            <td><& aldestination &></td>
+                            <td><& alcreated &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& alid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_aliases">
+                        <input type="hidden" name="inColumn" value="al_id_pk">
+                        <input type="hidden" name="inNullCol" value="al_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted Mail Aliases to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted mail aliases -->
+        <div class="tab-pane active" id="mfwds">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted Mail Forwards :>
+                </h2>
+                <% if ListDeletedMfwd %>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: Address :></th>
+                            <th><: Destination :></th>
+                            <th><: Created :></th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedMfwd %>
+                        <tr>
+                            <td><& fwid &></td>
+                            <td><& fwaddress &></td>
+                            <td><& fwdestination &></td>
+                            <td><& fwcreated &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& fwid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_forwarders">
+                        <input type="hidden" name="inColumn" value="al_id_pk">
+                        <input type="hidden" name="inNullCol" value="al_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted Mail Forwarders to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted Distribution Lists -->
+        <div class="tab-pane active" id="distlist">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted Distribution Lists :>
+                </h2>
+                <% if ListDeletedDlist %>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: Address :></th>
+                            <th><: Created :></th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedDlist %>
+                        <tr>
+                            <td><& dlid &></td>
+                            <td><& dladdress &></td>
+                            <td><& dlcreated &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dlid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_distlists">
+                        <input type="hidden" name="inColumn" value="dl_id_pk">
+                        <input type="hidden" name="inNullCol" value="dl_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted Distribution Lists to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted Distribution Users -->
+        <div class="tab-pane active" id="distuser">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted Distribution List Users :>
+                </h2>
+                <% if ListDeletedDusers %>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: Email :></th>
+                            <th><: Destination :></th>
+                            <th><: Created :></th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedDusers %>
+                        <tr>
+                            <td><& duid &></td>
+                            <td><& duaddress &></td>
+                            <td><& ducreated &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& duid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_aliases">
+                        <input type="hidden" name="inColumn" value="al_id_pk">
+                        <input type="hidden" name="inNullCol" value="al_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted Distribution List Users to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted Cronjobs -->
+        <div class="tab-pane active" id="crons">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted Cronjobs :>
+                </h2>
+                <% if ListDeletedCrons %>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: Script :></th>
+                            <th><: Path :></th>
+                            <th><: Description :></th>
+                            <th><: Created :></th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedCrons %>
+                        <tr>
+                            <td><& ctid &></td>
+                            <td><& ctscript &></td>
+                            <td><& ctpath &></td>
+                            <td><& ctdesc &></td>
+                            <td><& ctcreated &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& ctid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_cronjobs">
+                        <input type="hidden" name="inColumn" value="ct_id_pk">
+                        <input type="hidden" name="inNullCol" value="ct_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted Cronjobs to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted Packages -->
+        <div class="tab-pane active" id="pkgs">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted Hosting Packages :>
+                </h2>
+                <% if ListDeletedPkgs %>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: Title :></th>
+                            <th><: Created :></th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedPkgs %>
+                        <tr>
+                            <td><& pkid &></td>
+                            <td><& pktitle &></td>
+                            <td><& pkcreated &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& pkid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_packages">
+                        <input type="hidden" name="inColumn" value="pk_id_pk">
+                        <input type="hidden" name="inNullCol" value="pk_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted Hosting Packages to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+    </div>
+    <!-- Tab Panes End --> 
+</div>
+<script type="text/javascript">
+    <!--
+    function show_div(id) {
+        var e = document.getElementById(id);
+        if(e.style.display == 'none')
+            e.style.display = 'block';
+    }
+    //-->
+</script>
+<script type="text/javascript">
+    <!--
+    function hide_div(id) {
+        var e = document.getElementById(id);
+        if(e.style.display == 'block')
+            e.style.display = 'none';
+    }
+    //-->
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#asTabs').tabs({
+            cookie: { expires: 1, name: "asTabs Cookie" }
+        });
+    });
+</script>
+<br />
+<font face="ariel" size="1">Deleted Records Manager Module v0.0.1 &copy; <a target="_blank" href="http://www.mach-hosting.com">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora.org</a></font>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="DW8QTHWW4FMBY">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" width="70" height="21" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+</div>

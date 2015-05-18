@@ -1,0 +1,30 @@
+ <?php
+/**
+ * Deleted Records Manager Module for Sentora
+ * Version : 001
+ * Author :  TGates
+ * Email :  tgates@mach-hosting.com
+ * Info : http://sentora.org
+ */
+
+require_once('cnf/db.php');
+require_once('dryden/db/driver.class.php');
+require_once('dryden/debug/logger.class.php');
+require_once('dryden/runtime/dataobject.class.php');
+require_once('dryden/sys/versions.class.php');
+require_once('dryden/ctrl/options.class.php');
+require_once('dryden/ctrl/auth.class.php');
+require_once('dryden/ctrl/users.class.php');
+require_once('dryden/fs/director.class.php');
+require_once('inc/dbc.inc.php');
+
+//First variable is the new version. Second variable is the module folder name
+UpgradeModule('001', 'deleted_records_manager');
+
+function UpgradeModule($newversion, $module){
+    global $zdbh;
+    $sql = $zdbh->prepare("UPDATE x_modules SET mo_version_in = $newversion WHERE mo_folder_vc = '$module'");
+    $sql->execute();     
+}
+
+?> 
