@@ -44,9 +44,9 @@
 <% endif %>-->
 <!-- Menu Start -->
 <div style="display: block;">
-    <div class="ui-tabs ui-widget ui-widget-content ui-corner-all" id="asTabs">
+    <div class="container" id="asTabs">
         <!-- Nav tabs -->
-        <ul class="domains nav nav-tabs">
+        <ul class="nav nav-pills">
             <li><a href="#clients" data-toggle="tab"><: Clients :></a></li>
             <li><a href="#dbs" data-toggle="tab"><: Databases :></a></li>
             <li><a href="#dbuser" data-toggle="tab"><: DB Users :></a></li>
