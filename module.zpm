@@ -46,7 +46,7 @@
 <div style="display: block;">
     <div class="container" id="asTabs">
         <!-- Nav tabs -->
-        <ul class="nav nav-pills">
+        <ul class="nav nav-nav">
             <li><a href="#clients" data-toggle="tab"><: Clients :></a></li>
             <li><a href="#dbs" data-toggle="tab"><: Databases :></a></li>
             <li><a href="#dbuser" data-toggle="tab"><: DB Users :></a></li>
@@ -589,7 +589,7 @@
     });
 </script>
 <br />
-<font face="ariel" size="1">Deleted Records Manager Module v0.0.1 &copy; <a target="_blank" href="http://www.mach-hosting.com">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora.org</a></font>
+<font face="ariel" size="1">Deleted Records Manager Module v0.0.1 &copy; <a target="_blank" href="http://www.mach-hosting.com">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;Help support future development of this module and donate today!</font>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="DW8QTHWW4FMBY">
