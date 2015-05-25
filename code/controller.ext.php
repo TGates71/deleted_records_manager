@@ -527,7 +527,7 @@ class module_controller {
 
     static function getResult() {
         if (!fs_director::CheckForEmptyValue(self::$ok)) {
-            return ui_sysmessage::shout(ui_language::translate("Account removed successfully!"), "zannounceok");
+            return ui_sysmessage::shout(ui_language::translate("Record removed successfully!"), "zannounceok");
         }
         return;
     }
