@@ -5,48 +5,20 @@
     </div>
     <div class="zmodule_desc" id="zmodule_desc_<@ ModuleName @>">
         <@ ModuleDesc @>
+            <!-- Check for updates -->
+            <% if CheckUpdate %>
+            	<p>&nbsp;</p>
+                <font color="red" size="3"><b><: New Version Available :></b></font>
+            <% endif %>
     </div>
 </div>
 <p>&nbsp;</p>
 <@ Result @>
-<!-- delete warning --> <!-- Not working -->
-<!--<% if Confirm %>
-<div class="zform_wrapper alert alert-danger">
-        <h2>
-        <: Permanently Delete :>
-        ?</h2>
-    <p>
-        <: Please confirm that you want to permanently delete selected record. :>
-    </p>
-    <p><b>
-        <: WARNING! This will permanently remove this entry! :>
-        </b></p>
-    <form action="./?module=deleted_records_manager&action=Delete" method="post">
-        <table class="table table-striped" cellpadding="0" cellspacing="0">
-            <tr>
-                <th colspan="2" align="right">
-                	<input type="hidden" name="inDelete" value="<& delid &>">
-                    <input type="hidden" name="inTable" value="<& Table &>">
-                    <input type="hidden" name="inColumn" value="<& Column &>">
-                    <input type="hidden" name="inNullCol" value="<& NullCol &>">
-                    <button class="button-loader delete btn btn-danger" type="submit" >
-                    <: Delete :>
-                    </button>
-                    <button class="button-loader btn btn-default" type="button" onclick="window.location.href='./?module=deleted_records_manager';return false;">
-                    <: Cancel :>
-                    </button>
-                </th>
-            </tr>
-        </table>
-        <@ CSFR_Tag @>
-    </form>
-</div>
-<% endif %>-->
 <!-- Menu Start -->
 <div style="display: block;">
     <div class="container" id="asTabs">
         <!-- Nav tabs -->
-        <ul class="nav nav-nav">
+        <ul class="nav nav-tabs">
             <li><a href="#clients" data-toggle="tab"><: Clients :></a></li>
             <li><a href="#dbs" data-toggle="tab"><: Databases :></a></li>
             <li><a href="#dbuser" data-toggle="tab"><: DB Users :></a></li>
@@ -60,6 +32,8 @@
             <li><a href="#distuser" data-toggle="tab"><: Distribution Users :></a></li>
             <li><a href="#crons" data-toggle="tab"><: Cronjobs :></a></li>
             <li><a href="#pkgs" data-toggle="tab"><: Packages :></a></li>
+            <li><a href="#htaccess" data-toggle="tab"><: .Htaccess :></a></li>
+            <li><a href="#faqs" data-toggle="tab"><: FAQs :></a></li>
         </ul>
 <!-- Menu End --> 
     <!-- Tab Panes Start -->
@@ -71,7 +45,7 @@
                     <: Deleted Clients :>
                 </h2>
                 <% if ClientList %>
-                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
                     <table class="table table-striped">
                         <tr>
 	                        <th><: UID :></th>
@@ -113,7 +87,7 @@
                     <: Deleted Databases :>
                 </h2>
                 <% if ListDeletedDBs %>
-                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -153,7 +127,7 @@
                     <: Deleted Database Users :>
                 </h2>
                 <% if ListDeletedDBusers %>
-                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -189,7 +163,7 @@
                     <: Deleted DNS Records :>
                 </h2>
                 <% if ListDeletedDNS %>
-                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -229,7 +203,7 @@
                     <: Deleted Vhost Records :>
                 </h2>
                 <% if ListDeletedVhosts %>
-                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -267,7 +241,7 @@
                     <: Deleted FTP Records :>
                 </h2>
                 <% if ListDeletedFTPs %>
-                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -305,7 +279,7 @@
                     <: Deleted Mailboxes :>
                 </h2>
                 <% if ListDeletedMboxes %>
-                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -341,7 +315,7 @@
                     <: Deleted Mail Aliases :>
                 </h2>
                 <% if ListDeletedMalias %>
-                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -379,7 +353,7 @@
                     <: Deleted Mail Forwards :>
                 </h2>
                 <% if ListDeletedMfwd %>
-                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -417,7 +391,7 @@
                     <: Deleted Distribution Lists :>
                 </h2>
                 <% if ListDeletedDlist %>
-                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -453,7 +427,7 @@
                     <: Deleted Distribution List Users :>
                 </h2>
                 <% if ListDeletedDusers %>
-                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -490,7 +464,7 @@
                     <: Deleted Cronjobs :>
                 </h2>
                 <% if ListDeletedCrons %>
-                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -530,7 +504,7 @@
                     <: Deleted Hosting Packages :>
                 </h2>
                 <% if ListDeletedPkgs %>
-                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -556,6 +530,86 @@
                 </form>
                 <% else %>
                 <: You have no deleted Hosting Packages to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted .htaccess -->
+        <div class="tab-pane active" id="htaccess">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted Htaccess :>
+                </h2>
+                <% if ListDeletedhtaccess %>
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: UID :></th>
+                            <th><: User :></th
+                            ><th><: Folder :></th
+                            ><th><: Created :></th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedhtaccess %>
+                        <tr>
+                            <td><& pkid &></td>
+                            <td><& pkacc &></td>
+                            <td><& pkuser &></td>
+                            <td><& pkdir &></td>
+                            <td><& pkcreated &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& htid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_htaccess">
+                        <input type="hidden" name="inColumn" value="ht_id_pk">
+                        <input type="hidden" name="inNullCol" value="ht_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted Htaccess to remove at this time. :>
+                <% endif %>
+            </div>
+        </div>
+        <!-- Deleted FAQs -->
+        <div class="tab-pane active" id="faqs">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: Deleted FAQs :>
+                </h2>
+                <% if ListDeletedFAQs %>
+                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                    <table class="table table-striped">
+                        <tr>
+                            <th><: ID :></th>
+                            <th><: UID :></th>
+                            <th><: Question :></th>
+                            <th><: Answer :></th>
+                            <th><: Global :>?</th>
+                            <th><: Action :></th>
+                        </tr>
+                        <% loop ListDeletedFAQs %>
+                        <tr>
+                            <td><& fqid &></td>
+                            <td><& fqacc &></td>
+                            <td><& fqquestion &></td>
+                            <td><& fqanswer &></td>
+                            <td><& fqglobal &></td>
+                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& fqid &>">
+                                <: Delete :>
+                                </button></td>
+                        </tr>
+                        <input type="hidden" name="inTable" value="x_faqs">
+                        <input type="hidden" name="inColumn" value="fq_id_pk">
+                        <input type="hidden" name="inNullCol" value="fq_deleted_ts">
+                        <% endloop %>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no deleted FAQs to remove at this time. :>
                 <% endif %>
             </div>
         </div>
@@ -589,7 +643,7 @@
     });
 </script>
 <br />
-<font face="ariel" size="1">Deleted Records Manager Module v0.0.1 &copy; <a target="_blank" href="http://www.mach-hosting.com">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;Help support future development of this module and donate today!</font>
+<font face="ariel" size="1">Deleted Records Manager Module v1.0.0 &copy; <a target="_blank" href="http://www.mach-hosting.com">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;Help support future development of this module and donate today!</font>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="DW8QTHWW4FMBY">

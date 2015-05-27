@@ -1,11 +1,28 @@
 <?php
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 001
+ * Version : 100
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
  * Info : http://sentora.org
  */
+
+// Normal functions
+// Function to retrieve remote XML for update check
+	function check_remote_xml($xmlurl,$destfile){
+		$feed = simplexml_load_file($xmlurl);
+		if ($feed)
+		{
+			// $feed is valid, save it
+			$feed->asXML($destfile);
+		} elseif (file_exists($destfile)) {
+			// $feed is not valid, grab the last backup
+			$feed = simplexml_load_file($destfile);
+		} else {
+			die('Unable to retrieve XML file');
+		}
+	}
+
 class module_controller {
 
     static $complete;
@@ -15,6 +32,41 @@ class module_controller {
     static $clientid;
     static $resetform;
 
+// Module update check functions
+    static function getModuleVersion() {
+        global $zdbh, $controller, $zlo;
+        $module_path="./modules/" . $controller->GetControllerRequest('URL', 'module');
+        
+        // Get Update URL and Version From module.xml
+        $mod_xml = "./modules/" . $controller->GetControllerRequest('URL', 'module') . "/module.xml";
+        $mod_config = new xml_reader(fs_filehandler::ReadFileContents($mod_xml));
+        $mod_config->Parse();
+        $module_version = $mod_config->document->version[0]->tagData;
+		echo " ".$module_version."";
+    }
+	
+    static function getCheckUpdate() {
+        global $zdbh, $controller, $zlo;
+        $module_path="./modules/" . $controller->GetControllerRequest('URL', 'module');
+        
+        // Get Update URL and Version From module.xml
+        $mod_xml = "./modules/" . $controller->GetControllerRequest('URL', 'module') . "/module.xml";
+        $mod_config = new xml_reader(fs_filehandler::ReadFileContents($mod_xml));
+        $mod_config->Parse();
+        $module_updateurl = $mod_config->document->updateurl[0]->tagData;
+        $module_version = $mod_config->document->version[0]->tagData;
+
+        // Download XML in Update URL and get Download URL and Version
+        $myfile = check_remote_xml($module_updateurl, $module_path."/" . $controller->GetControllerRequest('URL', 'module') . ".xml");
+        $update_config = new xml_reader(fs_filehandler::ReadFileContents($module_path."/" . $controller->GetControllerRequest('URL', 'module') . ".xml"));
+        $update_config->Parse();
+        $update_url = $update_config->document->downloadurl[0]->tagData;
+        $update_version = $update_config->document->latestversion[0]->tagData;
+
+        if($update_version > $module_version)
+            return true;
+        return false;
+    }
 
     static function ListClients($uid = 0) {
         global $zdbh;
@@ -398,13 +450,54 @@ class module_controller {
         }
     }
 
-// Confirm functions
-	// need to figure out how to pass the variables from the Delete form to the Confirm form
-    static function getConfirm() {
-        if (isset($_POST['inDelete'])) {
-			return true;
+    static function getListDeletedhtaccess() {
+        global $zdbh;
+        $sql = "SELECT * FROM x_htaccess WHERE ht_deleted_ts IS NOT NULL";
+        $numrows = $zdbh->prepare($sql);
+        $numrows->execute();
+        if ($numrows->fetchColumn() <> 0) {
+            $sql = $zdbh->prepare($sql);
+            $res = array();
+            $sql->execute();
+            while ($rowmysql = $sql->fetch()) {
+                $numrowdb = $zdbh->query("SELECT * FROM x_htaccess WHERE ht_deleted_ts IS NOT NULL")->fetch();
+                $res[] = array(
+					'htid' => $rowmysql['ht_id_pk'],
+					'htacc' => $rowmysql['ht_acc_vc'],
+					'htuser' => $rowmysql['ht_user_vc'],
+					'htdir' => $rowmysql['ht_dir_vc'],
+					'htcreated' => $timestamp = gmdate("Y-m-d \T-H:i:s", $rowmysql['ht_created_ts'])
+					);
+            }
+            return $res;
         } else {
-        	return false;
+            return false;
+        }
+    }
+
+    static function getListDeletedFAQs() {
+        global $zdbh;
+        $sql = "SELECT * FROM x_faqs WHERE fq_deleted_ts IS NOT NULL";
+        $numrows = $zdbh->prepare($sql);
+        $numrows->execute();
+        if ($numrows->fetchColumn() <> 0) {
+            $sql = $zdbh->prepare($sql);
+            $res = array();
+            $sql->execute();
+            while ($rowmysql = $sql->fetch()) {
+                $numrowdb = $zdbh->query("SELECT * FROM x_faqs WHERE fq_deleted_ts IS NOT NULL")->fetch();
+                $res[] = array(
+					'fqid' => $rowmysql['fq_id_pk'],
+					'fqacc' => $rowmysql['fq_acc_fk'],
+					'fqquestion' => $rowmysql['fq_question_tx'],
+					'fqanswer' => $rowmysql['fq_answer_tx'],
+					'fqglobal' => $rowmysql['fq_global_in'],
+					'fqcreated' => $timestamp = gmdate("Y-m-d \T-H:i:s", $rowmysql['fq_created_ts'])
+					);
+            }
+            return $res;
+        } else {
+            return false;
         }
     }
 
