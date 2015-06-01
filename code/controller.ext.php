@@ -1,13 +1,13 @@
 <?php
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 100
+ * Version : 1.0.1
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
  * Info : http://sentora.org
  */
 
-// Normal functions
+// Regular functions
 // Function to retrieve remote XML for update check
 	function check_remote_xml($xmlurl,$destfile){
 		$feed = simplexml_load_file($xmlurl);
@@ -628,5 +628,17 @@ class module_controller {
     static function getCSFR_Tag() {
         return runtime_csfr::Token();
     }
+
+    static function getCopyright() {
+        $message = '<font face="ariel" size="2">'.ui_module::GetModuleName().' v1.0.1 &copy; 2013-'.date("Y").' by <a target="_blank" href="http://forums.sentora.org/member.php?action=profile&uid=2">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;Help support future development of this module and donate today!</font>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="DW8QTHWW4FMBY">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" width="70" height="21" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>';
+        return $message;
+    }
+
 }
 ?>

@@ -1,4 +1,13 @@
-<div class="zmodule_content panel" id="zmodule_header_<@ ModuleName @>">
+<!--
+/**
+ * Deleted Records Manager Module for Sentora
+ * Version : 1.0.1
+ * Author :  TGates
+ * Email :  tgates@mach-hosting.com
+ * Info : http://sentora.org
+ */
+ -->
+ <div class="zmodule_content panel" id="zmodule_header_<@ ModuleName @>">
 <div class="panel-heading"> <img src="<@ ModuleIcon @>" width="35" height="35" border="0" alt="<@ ModuleName @>">
     <div class="zmodule_title">
         <@ ModuleName @>
@@ -45,7 +54,7 @@
                     <: Deleted Clients :>
                 </h2>
                 <% if ClientList %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
 	                        <th><: UID :></th>
@@ -87,7 +96,7 @@
                     <: Deleted Databases :>
                 </h2>
                 <% if ListDeletedDBs %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -127,7 +136,7 @@
                     <: Deleted Database Users :>
                 </h2>
                 <% if ListDeletedDBusers %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -163,7 +172,7 @@
                     <: Deleted DNS Records :>
                 </h2>
                 <% if ListDeletedDNS %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -203,7 +212,7 @@
                     <: Deleted Vhost Records :>
                 </h2>
                 <% if ListDeletedVhosts %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -241,7 +250,7 @@
                     <: Deleted FTP Records :>
                 </h2>
                 <% if ListDeletedFTPs %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -279,7 +288,7 @@
                     <: Deleted Mailboxes :>
                 </h2>
                 <% if ListDeletedMboxes %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -315,7 +324,7 @@
                     <: Deleted Mail Aliases :>
                 </h2>
                 <% if ListDeletedMalias %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -353,7 +362,7 @@
                     <: Deleted Mail Forwards :>
                 </h2>
                 <% if ListDeletedMfwd %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -391,7 +400,7 @@
                     <: Deleted Distribution Lists :>
                 </h2>
                 <% if ListDeletedDlist %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -427,7 +436,7 @@
                     <: Deleted Distribution List Users :>
                 </h2>
                 <% if ListDeletedDusers %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -464,7 +473,7 @@
                     <: Deleted Cronjobs :>
                 </h2>
                 <% if ListDeletedCrons %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -504,7 +513,7 @@
                     <: Deleted Hosting Packages :>
                 </h2>
                 <% if ListDeletedPkgs %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -540,7 +549,7 @@
                     <: Deleted Htaccess :>
                 </h2>
                 <% if ListDeletedhtaccess %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -580,7 +589,7 @@
                     <: Deleted FAQs :>
                 </h2>
                 <% if ListDeletedFAQs %>
-                <form action="./?module=deleted_records_manager&action=ConfirmDelete" method="post">
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
                             <th><: ID :></th>
@@ -643,11 +652,5 @@
     });
 </script>
 <br />
-<font face="ariel" size="1">Deleted Records Manager Module v1.0.0 &copy; <a target="_blank" href="http://www.mach-hosting.com">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;Help support future development of this module and donate today!</font>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="DW8QTHWW4FMBY">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" width="70" height="21" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
+<@ Copyright @>
 </div>
