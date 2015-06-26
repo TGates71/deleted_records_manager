@@ -25,7 +25,7 @@
 <@ Result @>
 <!-- Menu Start -->
 <div style="display: block;">
-    <div class="container" id="asTabs">
+    <div id="asTabs">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
             <li><a href="#clients" data-toggle="tab"><: Clients :></a></li>
@@ -653,4 +653,5 @@
 </script>
 <br />
 <@ Copyright @>
+</div>
 </div>
