@@ -1,7 +1,7 @@
 <?php
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 1.0.1
+ * Version : 1.0.3
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
  * Info : http://sentora.org
@@ -22,6 +22,9 @@
 			die('Unable to retrieve XML file');
 		}
 	}
+
+// Deleted records exist notifier
+	$records_exist = "&#42;";
 
 class module_controller {
 
@@ -392,7 +395,7 @@ class module_controller {
                 $numrowdb = $zdbh->query("SELECT * FROM x_distlistusers WHERE du_deleted_ts IS NOT NULL")->fetch();
                 $res[] = array(
 					'duid' => $rowmysql['du_id_pk'],
-					'duscript' => $rowmysql['du_address_vc'],
+					'duaddress' => $rowmysql['du_address_vc'],
 					'ducreated' => $timestamp = gmdate("Y-m-d \T-H:i:s", $rowmysql['du_created_ts'])
 					);
             }
@@ -630,7 +633,7 @@ class module_controller {
     }
 
     static function getCopyright() {
-        $message = '<font face="ariel" size="2">'.ui_module::GetModuleName().' v1.0.1 &copy; 2013-'.date("Y").' by <a target="_blank" href="http://forums.sentora.org/member.php?action=profile&uid=2">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;Help support future development of this module and donate today!</font>
+        $message = '<font face="ariel" size="2">'.ui_module::GetModuleName().' v1.0.3 &copy; 2013-'.date("Y").' by <a target="_blank" href="http://forums.sentora.org/member.php?action=profile&uid=2">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;Help support future development of this module and donate today!</font>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="DW8QTHWW4FMBY">

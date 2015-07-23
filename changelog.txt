@@ -1,0 +1,11 @@
+ * Changelog for Deleted Records Manager Module for Sentora.org
+ * Changelog.txt
+ * Author :  TGates
+ * Email :  tgates@mach-hosting.com
+
+v1.0.3
+-Fixed some typos - Thanks to MarkDark
+-Added notification asterisk (*) to tab bar names if records exist
+
+v1.0.0
+-Initial Module creation

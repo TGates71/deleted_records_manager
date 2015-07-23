@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     <name>Deleted Records Manager</name>
-    <version>101</version>
+    <version>103</version>
     <defaultcat>Admin</defaultcat>
     <desc>This modules allows the admin to view and delete client database records that have been marked 'deleted' by Sentora.</desc>
 	<type>user</type>

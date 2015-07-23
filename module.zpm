@@ -1,7 +1,7 @@
 <!--
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 1.0.1
+ * Version : 1.0.3
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
  * Info : http://sentora.org
@@ -28,21 +28,21 @@
     <div id="asTabs">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
-            <li><a href="#clients" data-toggle="tab"><: Clients :></a></li>
-            <li><a href="#dbs" data-toggle="tab"><: Databases :></a></li>
-            <li><a href="#dbuser" data-toggle="tab"><: DB Users :></a></li>
-            <li><a href="#dns" data-toggle="tab"><: DNS :></a></li>
-            <li><a href="#vhosts" data-toggle="tab"><: VHosts :></a></li>
-            <li><a href="#ftps" data-toggle="tab"><: FTPs :></a></li>
-            <li><a href="#mboxs" data-toggle="tab"><: Mailboxes :></a></li>
-            <li><a href="#maliases" data-toggle="tab"><: Mail Aliases :></a></li>
-            <li><a href="#mfwds" data-toggle="tab"><: Mail Forwords :></a></li>
-            <li><a href="#distlist" data-toggle="tab"><: Distribution Lists :></a></li>
-            <li><a href="#distuser" data-toggle="tab"><: Distribution Users :></a></li>
-            <li><a href="#crons" data-toggle="tab"><: Cronjobs :></a></li>
-            <li><a href="#pkgs" data-toggle="tab"><: Packages :></a></li>
-            <li><a href="#htaccess" data-toggle="tab"><: .Htaccess :></a></li>
-            <li><a href="#faqs" data-toggle="tab"><: FAQs :></a></li>
+            <li><a href="#clients" data-toggle="tab"><: Clients :><% if ClientList %>*<% endif %></a></li>
+            <li><a href="#dbs" data-toggle="tab"><: Databases :><% if ListDeletedDBs %>*<% endif %></a></li>
+            <li><a href="#dbuser" data-toggle="tab"><: DB Users :><% if ListDeletedDBusers %>*<% endif %></a></li>
+            <li><a href="#dns" data-toggle="tab"><: DNS :><% if ListDeletedDNS %>*<% endif %></a></li>
+            <li><a href="#vhosts" data-toggle="tab"><: VHosts :><% if ListDeletedVhosts %>*<% endif %></a></li>
+            <li><a href="#ftps" data-toggle="tab"><: FTPs :><% if ListDeletedFTPs %>*<% endif %></a></li>
+            <li><a href="#mboxs" data-toggle="tab"><: Mailboxes :><% if ListDeletedMboxes %>*<% endif %></a></li>
+            <li><a href="#maliases" data-toggle="tab"><: Mail Aliases :><% if ListDeletedMalias %>*<% endif %></a></li>
+            <li><a href="#mfwds" data-toggle="tab"><: Mail Forwords :><% if ListDeletedMfwd %>*<% endif %></a></li>
+            <li><a href="#distlist" data-toggle="tab"><: Distribution Lists :><% if ListDeletedDlist %>*<% endif %></a></li>
+            <li><a href="#distuser" data-toggle="tab"><: Distribution Users :><% if ListDeletedDusers %>*<% endif %></a></li>
+            <li><a href="#crons" data-toggle="tab"><: Cronjobs :><% if ListDeletedCrons %>*<% endif %></a></li>
+            <li><a href="#pkgs" data-toggle="tab"><: Packages :><% if ListDeletedPkgs %>*<% endif %></a></li>
+            <li><a href="#htaccess" data-toggle="tab"><: .Htaccess :><% if ListDeletedhtaccess %>*<% endif %></a></li>
+            <li><a href="#faqs" data-toggle="tab"><: FAQs :><% if ListDeletedFAQs %>*<% endif %></a></li>
         </ul>
 <!-- Menu End --> 
     <!-- Tab Panes Start -->
@@ -382,8 +382,8 @@
                                 </button></td>
                         </tr>
                         <input type="hidden" name="inTable" value="x_forwarders">
-                        <input type="hidden" name="inColumn" value="al_id_pk">
-                        <input type="hidden" name="inNullCol" value="al_deleted_ts">
+                        <input type="hidden" name="inColumn" value="fw_id_pk">
+                        <input type="hidden" name="inNullCol" value="fw_deleted_ts">
                         <% endloop %>
                     </table>
                     <@ CSFR_Tag @>
@@ -454,9 +454,9 @@
                                 <: Delete :>
                                 </button></td>
                         </tr>
-                        <input type="hidden" name="inTable" value="x_aliases">
-                        <input type="hidden" name="inColumn" value="al_id_pk">
-                        <input type="hidden" name="inNullCol" value="al_deleted_ts">
+                        <input type="hidden" name="inTable" value="x_distlistusers">
+                        <input type="hidden" name="inColumn" value="du_id_pk">
+                        <input type="hidden" name="inNullCol" value="du_deleted_ts">
                         <% endloop %>
                     </table>
                     <@ CSFR_Tag @>
