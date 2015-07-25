@@ -25,6 +25,7 @@
 <@ Result @>
 <!-- Menu Start -->
 <div style="display: block;">
+<div style="font-size:10px"><: (Tabs marked with * have existing records.) :></div>
     <div id="asTabs">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
