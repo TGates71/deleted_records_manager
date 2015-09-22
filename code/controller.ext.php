@@ -689,6 +689,7 @@ class module_controller {
     }
 
     static function getCopyright() {
+		/* THIS COPYRIGHT NOTICE MAY NOT BE ALTERED IN ANY WAY OR REMOVED FOR ANY REASON WITHOUT WRITTEN PERMISSION OF THE AUTHOR. */
         $message = '<font face="ariel" size="2">'.ui_module::GetModuleName().' v1.1.0 &copy; 2013-'.date("Y").' by <a target="_blank" href="http://forums.sentora.org/member.php?action=profile&uid=2">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;Help support future development of this module and donate today!</font>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 <input type="hidden" name="cmd" value="_s-xclick">
