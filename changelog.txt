@@ -3,6 +3,12 @@
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
 
+v1.1.0
+-Added database log viewer/cleaner.
+-Added database log truncator hook - (Removes entries older than 2 hours - Log gets too big to view.)
+-Fixed active tab issue/Return to same tab.
+-Cleaned up some unused code.
+
 v1.0.3
 -Fixed some typos - Thanks to MarkDark
 -Added notification asterisk (*) to tab bar names if records exist

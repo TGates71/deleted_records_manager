@@ -1,13 +1,14 @@
 <!--
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 1.0.3
+ * Version : 1.1.0
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
  * Info : http://sentora.org
  */
  -->
- <div class="zmodule_content panel" id="zmodule_header_<@ ModuleName @>">
+
+<div class="zmodule_content panel" id="zmodule_header_<@ ModuleName @>">
 <div class="panel-heading"> <img src="<@ ModuleIcon @>" width="35" height="35" border="0" alt="<@ ModuleName @>">
     <div class="zmodule_title">
         <@ ModuleName @>
@@ -28,7 +29,8 @@
 <div style="font-size:10px"><: (Tabs marked with * have existing records.) :></div>
     <div id="asTabs">
         <!-- Nav tabs -->
-        <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs" id="myTab">
+	        <li><a href="#dblogs" data-toggle="tab"><: DB Logs :><% if ListDBLogs %>*<% endif %></a></li>
             <li><a href="#clients" data-toggle="tab"><: Clients :><% if ClientList %>*<% endif %></a></li>
             <li><a href="#dbs" data-toggle="tab"><: Databases :><% if ListDeletedDBs %>*<% endif %></a></li>
             <li><a href="#dbuser" data-toggle="tab"><: DB Users :><% if ListDeletedDBusers %>*<% endif %></a></li>
@@ -49,7 +51,7 @@
     <!-- Tab Panes Start -->
     <div class="tab-content"> 
         <!-- Deleted Users -->
-        <div class="tab-pane active" id="clients">
+        <div class="tab-pane" id="clients">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted Clients :>
@@ -76,7 +78,7 @@
                             <td><& numclients &></td>
                             <td><& diskspacereadable &> / <& diskspacequotareadable &></td>
                             <td><& bandwidthreadable &> / <& bandwidthquotareadable &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" id="button" name="inDelete" value="<& userid &>"><: Delete :></button></td>
+                            <td><button class="button-loader btn btn-danger" type="submit" id="button" name="inDelete" value="<& userid &>"><: Delete :></button></td>
                         </tr>
                         <input type="hidden" name="inTable" value="x_accounts">
                         <input type="hidden" name="inColumn" value="ac_id_pk">
@@ -91,7 +93,7 @@
             </div>
         </div>
         <!-- Deleted Databases -->
-        <div class="tab-pane active" id="dbs">
+        <div class="tab-pane" id="dbs">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted Databases :>
@@ -114,7 +116,7 @@
                             <td><& dbname &></td>
                             <td><& dbspace &></td>
                             <td><& dbcreated &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dbid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dbid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -131,7 +133,7 @@
             </div>
         </div>
         <!-- Deleted Db Users -->
-        <div class="tab-pane active" id="dbuser">
+        <div class="tab-pane" id="dbuser">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted Database Users :>
@@ -150,7 +152,7 @@
                             <td><& dbuserid &></td>
                             <td><& dbusername &></td>
                             <td><& dbusercreated &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dbuserid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dbuserid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -167,7 +169,7 @@
             </div>
         </div>
         <!-- Deleted DNS -->
-        <div class="tab-pane active" id="dns">
+        <div class="tab-pane" id="dns">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted DNS Records :>
@@ -190,7 +192,7 @@
                             <td><& dnname &></td>
                             <td><& dntype &></td>
                             <td><& dncreated &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dnid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dnid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -207,7 +209,7 @@
             </div>
         </div>
         <!-- Deleted Vhosts -->
-        <div class="tab-pane active" id="vhosts">
+        <div class="tab-pane" id="vhosts">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted Vhost Records :>
@@ -228,7 +230,7 @@
                             <td><& vhuser &></td>
                             <td><& vhname &></td>
                             <td><& vhcreated &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& vhid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& vhid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -245,7 +247,7 @@
             </div>
         </div>
         <!-- Deleted FTP -->
-        <div class="tab-pane active" id="ftps">
+        <div class="tab-pane" id="ftps">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted FTP Records :>
@@ -266,7 +268,7 @@
                             <td><& ftpaccname &></td>
                             <td><& ftpfolder &></td>
                             <td><& ftpcreated &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& ftpid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& ftpid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -283,7 +285,7 @@
             </div>
         </div>
         <!-- Deleted mailboxes -->
-        <div class="tab-pane active" id="mboxs">
+        <div class="tab-pane" id="mboxs">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted Mailboxes :>
@@ -302,7 +304,7 @@
                             <td><& mbid &></td>
                             <td><& mbaddress &></td>
                             <td><& mbcreated &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& mbid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& mbid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -319,7 +321,7 @@
             </div>
         </div>
         <!-- Deleted mail aliases -->
-        <div class="tab-pane active" id="maliases">
+        <div class="tab-pane" id="maliases">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted Mail Aliases :>
@@ -340,7 +342,7 @@
                             <td><& aladdress &></td>
                             <td><& aldestination &></td>
                             <td><& alcreated &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& alid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& alid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -357,7 +359,7 @@
             </div>
         </div>
         <!-- Deleted mail aliases -->
-        <div class="tab-pane active" id="mfwds">
+        <div class="tab-pane" id="mfwds">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted Mail Forwards :>
@@ -378,7 +380,7 @@
                             <td><& fwaddress &></td>
                             <td><& fwdestination &></td>
                             <td><& fwcreated &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& fwid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& fwid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -395,7 +397,7 @@
             </div>
         </div>
         <!-- Deleted Distribution Lists -->
-        <div class="tab-pane active" id="distlist">
+        <div class="tab-pane" id="distlist">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted Distribution Lists :>
@@ -414,7 +416,7 @@
                             <td><& dlid &></td>
                             <td><& dladdress &></td>
                             <td><& dlcreated &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dlid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dlid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -431,7 +433,7 @@
             </div>
         </div>
         <!-- Deleted Distribution Users -->
-        <div class="tab-pane active" id="distuser">
+        <div class="tab-pane" id="distuser">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted Distribution List Users :>
@@ -451,7 +453,7 @@
                             <td><& duid &></td>
                             <td><& duaddress &></td>
                             <td><& ducreated &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& duid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& duid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -468,7 +470,7 @@
             </div>
         </div>
         <!-- Deleted Cronjobs -->
-        <div class="tab-pane active" id="crons">
+        <div class="tab-pane" id="crons">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted Cronjobs :>
@@ -491,7 +493,7 @@
                             <td><& ctpath &></td>
                             <td><& ctdesc &></td>
                             <td><& ctcreated &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& ctid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& ctid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -508,7 +510,7 @@
             </div>
         </div>
         <!-- Deleted Packages -->
-        <div class="tab-pane active" id="pkgs">
+        <div class="tab-pane" id="pkgs">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted Hosting Packages :>
@@ -527,7 +529,7 @@
                             <td><& pkid &></td>
                             <td><& pktitle &></td>
                             <td><& pkcreated &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& pkid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& pkid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -544,7 +546,7 @@
             </div>
         </div>
         <!-- Deleted .htaccess -->
-        <div class="tab-pane active" id="htaccess">
+        <div class="tab-pane" id="htaccess">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted Htaccess :>
@@ -567,7 +569,7 @@
                             <td><& pkuser &></td>
                             <td><& pkdir &></td>
                             <td><& pkcreated &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& htid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& htid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -584,7 +586,7 @@
             </div>
         </div>
         <!-- Deleted FAQs -->
-        <div class="tab-pane active" id="faqs">
+        <div class="tab-pane" id="faqs">
             <div class="zgrid_wrapper">
                 <h2>
                     <: Deleted FAQs :>
@@ -607,7 +609,7 @@
                             <td><& fqquestion &></td>
                             <td><& fqanswer &></td>
                             <td><& fqglobal &></td>
-                            <td><button class="button-loader delete btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& fqid &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& fqid &>">
                                 <: Delete :>
                                 </button></td>
                         </tr>
@@ -623,36 +625,94 @@
                 <% endif %>
             </div>
         </div>
+        <!-- DB Log -->
+        <div class="tab-pane" id="dblogs">
+            <div class="zgrid_wrapper">
+                <h2>
+                    <: View DB Logs :>
+                </h2>
+                <% if ListDBLogs %>
+                <div class="btn-group">
+                <form action="./?module=deleted_records_manager" method="post">
+                	<button class="button-loader btn btn-info" type="submit" name="inRefresh" id="inRefresh" value="refresh" width="100">
+                    <: Refresh Page :>
+                    </button>
+                    <@ CSFR_Tag @>
+                </form>
+                <form action="./?module=deleted_records_manager&action=truncate" method="post">
+                	<button class="button-loader btn btn-danger" type="submit" name="inTruncate" id="inTruncate" value="truncate" width="100">
+                    <: Delete All Logs :>
+                    </button>
+                    <@ CSFR_Tag @>
+                </form>
+                </div>
+                <form action="./?module=deleted_records_manager&action=Delete" method="post">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><: ID :></th>
+                                <th><: UID :></th>
+                                <th><: Code :></th>
+                                <th><: Detail :></th>
+                                <th><: Stack :></th>
+                                <th><: Date :></th>
+                                <th><: Action :></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <% loop ListDBLogs %>
+                            <tr>
+                                <td><& lgid &></td>
+                                <td><& lguser &></td>
+                                <td><& lgcode &></td>
+                                <td><& lgdetail &></td>
+                                <td><& lgstack &></td>
+                                <td><& lgcreated &></td>
+                                <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& lgid &>">
+                                <: Delete :>
+                                </button></td>
+                            </tr>
+                            <input type="hidden" name="inTable" value="x_logs">
+                            <input type="hidden" name="inColumn" value="lg_id_pk">
+                            <input type="hidden" name="inNullCol" value="lg_when_ts">
+                        <% endloop %>
+                        </tbody>
+                    </table>
+                    <@ CSFR_Tag @>
+                </form>
+                <% else %>
+                <: You have no Log Entries to review at this time. (Data will appear after daemon run.) :>
+                <p>&nbsp;</p>
+                <div class="btn-group">
+                    <form action="./?module=deleted_records_manager" method="post">
+                        <button class="button-loader btn btn-info" type="submit" name="inRefresh" id="inRefresh" value="refresh" width="100">
+                        <: Refresh Page :>
+                        </button>
+                        <@ CSFR_Tag @>
+                    </form>
+                </div>
+                <% endif %>
+            </div>
+        </div>
     </div>
     <!-- Tab Panes End --> 
 </div>
-<script type="text/javascript">
-    <!--
-    function show_div(id) {
-        var e = document.getElementById(id);
-        if(e.style.display == 'none')
-            e.style.display = 'block';
-    }
-    //-->
-</script>
-<script type="text/javascript">
-    <!--
-    function hide_div(id) {
-        var e = document.getElementById(id);
-        if(e.style.display == 'block')
-            e.style.display = 'none';
-    }
-    //-->
-</script>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#asTabs').tabs({
-            cookie: { expires: 1, name: "asTabs Cookie" }
-        });
-    });
-</script>
 <br />
 <@ Copyright @>
 </div>
 </div>
+<script>
+	$(function() { 
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			// save the latest tab; use cookies if you like 'em better:
+			localStorage.setItem('lastTab', $(this).attr('href'));
+		});
+	
+		// go to the latest tab, if it exists:
+		var lastTab = localStorage.getItem('lastTab');
+		if (lastTab) {
+			$('[href="' + lastTab + '"]').tab('show');
+		}
+	});
+</script>
+<script type="text/javascript" src="assets/pagination.js">
