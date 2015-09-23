@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <updateserver>
-<latestversion>110</latestversion>
-<downloadurl>http://zppy-repo.mach-hosting.com/deleted_records_manager.zpp</downloadurl>
-<desc>This modules allows the admin to view and delete client database records that have been marked 'deleted' by Sentora.</desc>
-<authorname>T.Gates</authorname>
-<authoremail>tgates@mach-hosting.com</authoremail>
-<authorurl>http://www.sentora.org</authorurl>
-<ostype>all</ostype>
+	<latestversion>110</latestversion>
+	<downloadurl>http://zppy-repo.mach-hosting.com/deleted_records_manager.zpp</downloadurl>
+	<desc>This modules allows the admin to view and delete client database records that have been marked 'deleted' by Sentora.</desc>
+	<updatedesc>Tabs bug fix, added database log viewer and added database log truncator hook.</updatedesc>
+	<authorname>T.Gates</authorname>
+	<authoremail>tgates@mach-hosting.com</authoremail>
+	<authorurl>http://www.sentora.org</authorurl>
+	<ostype>all</ostype>
 </updateserver>
