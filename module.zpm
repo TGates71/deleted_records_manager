@@ -1,7 +1,7 @@
 <!--
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 1.1.0
+ * Version : 1.1.1
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
  * Info : http://sentora.org
@@ -11,7 +11,7 @@
 <div class="zmodule_content panel" id="zmodule_header_<@ ModuleName @>">
 <div class="panel-heading"> <img src="<@ ModuleIcon @>" width="35" height="35" border="0" alt="<@ ModuleName @>">
     <div class="zmodule_title">
-        <@ ModuleName @>
+        <@ ModuleName @><span class="zmodule_desc"><@ ModuleVersion @></span>
     </div>
     <div class="zmodule_desc" id="zmodule_desc_<@ ModuleName @>">
         <@ ModuleDesc @>
@@ -57,6 +57,7 @@
                     <: Deleted Clients :>
                 </h2>
                 <% if ClientList %>
+				<: Deleting a client account will also delete the matching profile entry. :>
                 <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
@@ -183,7 +184,7 @@
                             <th><: DNS Name :></th>
                             <th><: DNS Type :></th>
                             <th><: Created :></th>
-                            <th><: Action :></th>
+                            <th><: Actions :></th>
                         </tr>
                         <% loop ListDeletedDNS %>
                         <tr>
@@ -192,12 +193,12 @@
                             <td><& dnname &></td>
                             <td><& dntype &></td>
                             <td><& dncreated &></td>
-                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dnid &>">
-                                <: Delete :>
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dnname &>">
+                                <: Delete All Related :>
                                 </button></td>
                         </tr>
                         <input type="hidden" name="inTable" value="x_dns">
-                        <input type="hidden" name="inColumn" value="dn_id_pk">
+                        <input type="hidden" name="inColumn" value="dn_name_vc">
                         <input type="hidden" name="inNullCol" value="dn_deleted_ts">
                         <% endloop %>
                     </table>

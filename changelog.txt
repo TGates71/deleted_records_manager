@@ -3,6 +3,11 @@
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
 
+v1.1.1
+-Changed DNS deletion method. Remove all records per domain instead of by ID.
+-Deleting a client also now deletes the coresponding profile.
+-Fixed versioning.
+
 v1.1.0
 -Added database log viewer/cleaner.
 -Added database log truncator hook - (Removes entries older than 2 hours - Log gets too big to view.)

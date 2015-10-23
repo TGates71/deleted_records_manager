@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <updateserver>
-	<latestversion>110</latestversion>
+	<latestversion>1.1.1</latestversion>
 	<downloadurl>http://zppy-repo.mach-hosting.com/deleted_records_manager.zpp</downloadurl>
 	<desc>This modules allows the admin to view and delete client database records that have been marked 'deleted' by Sentora.</desc>
-	<updatedesc>Tabs bug fix, added database log viewer and added database log truncator hook.</updatedesc>
+	<updatedesc>Deleting client also deletes their profile. DNS entries deleted by domain name instead of ID. (Faster)</updatedesc>
 	<authorname>T.Gates</authorname>
 	<authoremail>tgates@mach-hosting.com</authoremail>
 	<authorurl>http://www.sentora.org</authorurl>

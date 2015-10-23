@@ -1,7 +1,7 @@
 <?php
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 1.1.0
+ * Version : 1.1.1
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
  * Info : http://sentora.org
@@ -35,9 +35,11 @@ class module_controller {
     static $clientid;
     static $resetform;
 
+/*START - Check for updates added by TGates*/
 // Module update check functions
     static function getModuleVersion() {
-        global $zdbh, $controller, $zlo;
+        global $controller;
+
         $module_path="./modules/" . $controller->GetControllerRequest('URL', 'module');
         
         // Get Update URL and Version From module.xml
@@ -45,11 +47,11 @@ class module_controller {
         $mod_config = new xml_reader(fs_filehandler::ReadFileContents($mod_xml));
         $mod_config->Parse();
         $module_version = $mod_config->document->version[0]->tagData;
-		echo " ".$module_version."";
+        return "v".$module_version."";
     }
-	
+    
     static function getCheckUpdate() {
-        global $zdbh, $controller, $zlo;
+        global $controller;
         $module_path="./modules/" . $controller->GetControllerRequest('URL', 'module');
         
         // Get Update URL and Version From module.xml
@@ -60,7 +62,7 @@ class module_controller {
         $module_version = $mod_config->document->version[0]->tagData;
 
         // Download XML in Update URL and get Download URL and Version
-        $myfile = check_remote_xml($module_updateurl, $module_path."/" . $controller->GetControllerRequest('URL', 'module') . ".xml");
+        $myfile = self::getCheckRemoteXml($module_updateurl, $module_path."/" . $controller->GetControllerRequest('URL', 'module') . ".xml");
         $update_config = new xml_reader(fs_filehandler::ReadFileContents($module_path."/" . $controller->GetControllerRequest('URL', 'module') . ".xml"));
         $update_config->Parse();
         $update_url = $update_config->document->downloadurl[0]->tagData;
@@ -70,6 +72,23 @@ class module_controller {
             return true;
         return false;
     }
+
+// Function to retrieve remote XML for update check
+    static function getCheckRemoteXml($xmlurl,$destfile){
+        $feed = simplexml_load_file($xmlurl);
+        if ($feed)
+        {
+            // $feed is valid, save it
+            $feed->asXML($destfile);
+        } elseif (file_exists($destfile)) {
+            // $feed is not valid, grab the last backup
+            $feed = simplexml_load_file($destfile);
+        } else {
+            //die('Unable to retrieve XML file');
+            echo('<div class="alert alert-danger">Unable to check for updates, your version may be outdated!.</div>');
+        }
+    }
+/*END - Check for updates added by TGates*/
 
     static function ListClients($uid = 0) {
         global $zdbh;
@@ -548,8 +567,15 @@ class module_controller {
 			WHERE ".$column." = :delid AND ".$delNullCol." IS NOT NULL");
         $sql->bindParam(':delid', $delid);
         $sql->execute();
-		// add delete code to remove user's profile also (if is-user-account, del profile too)
-        self::$ok = true;
+		// Remove user profile if deleting client account
+		if ($table == "ac_id_pk") {
+			$sql = $zdbh->prepare("
+			DELETE FROM x_profiles
+			WHERE ud_user_fk = :delid LIMIT 1");
+			$sql->bindParam(':delid', $delid);
+			$sql->execute();
+		}
+		self::$ok = true;
         return true;
     }
 
@@ -690,7 +716,7 @@ class module_controller {
 
     static function getCopyright() {
 		/* THIS COPYRIGHT NOTICE MAY NOT BE ALTERED IN ANY WAY OR REMOVED FOR ANY REASON WITHOUT WRITTEN PERMISSION OF THE AUTHOR. */
-        $message = '<font face="ariel" size="2">'.ui_module::GetModuleName().' v1.1.0 &copy; 2013-'.date("Y").' by <a target="_blank" href="http://forums.sentora.org/member.php?action=profile&uid=2">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;Help support future development of this module and donate today!</font>
+        $message = '<font face="ariel" size="2">'.ui_module::GetModuleName().' &copy; 2014-'.date("Y").' by <a target="_blank" href="http://forums.sentora.org/member.php?action=profile&uid=2">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;Help support future development of this module and donate today!</font>
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="DW8QTHWW4FMBY">
