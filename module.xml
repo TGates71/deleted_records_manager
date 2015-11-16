@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module>
     <name>Deleted Records Manager</name>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <defaultcat>Admin</defaultcat>
     <desc>This modules allows the admin to view and delete client database records that have been marked 'deleted' by Sentora.</desc>
 	<type>user</type>
     <authorname>TGates</authorname>
     <authoremail>tgates@mach-hosting.com</authoremail>
-    <authorurl>http://www.sentora.org/</authorurl>
+    <authorurl>http://forums.sentora.org/showthread.php?tid=1617</authorurl>
     <updateurl>http://zppy-repo.mach-hosting.com/deleted_records_manager.xml</updateurl>
 </module>

@@ -2,6 +2,9 @@
  * Changelog.txt
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
+ 
+v1.1.2
+-Updated support link.
 
 v1.1.1
 -Changed DNS deletion method. Remove all records per domain instead of by ID.
