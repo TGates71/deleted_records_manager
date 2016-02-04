@@ -1,7 +1,7 @@
 <?php
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 1.1.2
+ * Version : 1.1.3
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
  * Info : http://sentora.org
@@ -388,7 +388,7 @@ class module_controller {
             $res = array();
             $sql->execute();
             while ($rowmysql = $sql->fetch()) {
-                $numrowdb = $zdbh->query("SELECT * FROM x_distlist WHERE dl_deleted_ts IS NOT NULL")->fetch();
+                $numrowdb = $zdbh->query("SELECT * FROM x_distlists WHERE dl_deleted_ts IS NOT NULL")->fetch();
                 $res[] = array(
 					'dlid' => $rowmysql['dl_id_pk'],
 					'dladdress' => $rowmysql['dl_address_vc'],
