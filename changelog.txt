@@ -2,7 +2,10 @@
  * Changelog.txt
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
- 
+
+ v1.1.3
+-fixed distlist/distlists typo
+
 v1.1.2
 -Updated support link.
 
