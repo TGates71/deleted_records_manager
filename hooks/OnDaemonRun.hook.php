@@ -1,7 +1,7 @@
 <?php
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 1.1.3
+ * Version : 1.1.5
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
  * Info : http://sentora.org

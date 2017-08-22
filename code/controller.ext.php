@@ -1,7 +1,7 @@
 <?php
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 1.1.3
+ * Version : 1.1.5
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
  * Info : http://sentora.org
@@ -108,7 +108,9 @@ class module_controller {
             $res = array();
             $sql->execute();
             while ($rowclients = $sql->fetch()) {
-                if ($rowclients['ac_user_vc'] != "zadmin") {
+				// change zadmin username
+                //if ($rowclients['ac_user_vc'] != "zadmin") {
+				if ($rowclients['ac_id_pk'] != "1") {
 ;
                     $numrows = $zdbh->prepare("SELECT COUNT(*) FROM x_accounts WHERE ac_reseller_fk=:ac_id_pk AND ac_deleted_ts IS NULL");
                     $numrows->bindParam(':ac_id_pk', $rowclients['ac_id_pk']);
@@ -249,6 +251,7 @@ class module_controller {
 					'dnid' => $rowmysql['dn_id_pk'],
 					'dnuser' => $rowmysql['dn_acc_fk'],
 					'dnname' => $rowmysql['dn_name_vc'],
+					'dnsid' => $rowmysql['dn_vhost_fk'],
 					'dntype' => $rowmysql['dn_type_vc'],
 					'dncreated' => $timestamp = gmdate("Y-m-d \T-H:i:s", $rowmysql['dn_created_ts'])
 					);

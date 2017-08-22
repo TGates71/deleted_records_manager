@@ -3,7 +3,14 @@
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
 
- v1.1.3
+ v1.1.5
+-updated DNS deletion
+-fixed repo URL
+
+v1.1.4
+-fixed author url
+
+v1.1.3
 -fixed distlist/distlists typo
 
 v1.1.2

@@ -1,7 +1,7 @@
 <!--
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 1.1.3
+ * Version : 1.1.5
  * Author :  TGates
  * Email :  tgates@mach-hosting.com
  * Info : http://sentora.org
@@ -181,6 +181,7 @@
                         <tr>
                             <th><: ID :></th>
                             <th><: Client ID :></th>
+                            <th><: DNS ID :></th>
                             <th><: DNS Name :></th>
                             <th><: DNS Type :></th>
                             <th><: Created :></th>
@@ -190,15 +191,16 @@
                         <tr>
                             <td><& dnid &></td>
                             <td><& dnuser &></td>
+                            <td><& dnsid &></td>
                             <td><& dnname &></td>
                             <td><& dntype &></td>
                             <td><& dncreated &></td>
-                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dnname &>">
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dnsid &>">
                                 <: Delete All Related :>
                                 </button></td>
                         </tr>
                         <input type="hidden" name="inTable" value="x_dns">
-                        <input type="hidden" name="inColumn" value="dn_name_vc">
+                        <input type="hidden" name="inColumn" value="dn_vhost_fk">
                         <input type="hidden" name="inNullCol" value="dn_deleted_ts">
                         <% endloop %>
                     </table>
