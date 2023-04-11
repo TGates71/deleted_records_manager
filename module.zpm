@@ -1,9 +1,9 @@
 <!--
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 1.1.5
+ * Version : 2.0.0
  * Author :  TGates
- * Email :  tgates@mach-hosting.com
+ * Email :  tgates@sentora.org
  * Info : http://sentora.org
  */
  -->
@@ -11,7 +11,7 @@
 <div class="zmodule_content panel" id="zmodule_header_<@ ModuleName @>">
 <div class="panel-heading"> <img src="<@ ModuleIcon @>" width="35" height="35" border="0" alt="<@ ModuleName @>">
     <div class="zmodule_title">
-        <@ ModuleName @><span class="zmodule_desc"><@ ModuleVersion @></span>
+        <@ ModuleName @>
     </div>
     <div class="zmodule_desc" id="zmodule_desc_<@ ModuleName @>">
         <@ ModuleDesc @>
@@ -57,7 +57,6 @@
                     <: Deleted Clients :>
                 </h2>
                 <% if ClientList %>
-				<: Deleting a client account will also delete the matching profile entry. :>
                 <form action="./?module=deleted_records_manager&action=Delete" method="post">
                     <table class="table table-striped">
                         <tr>
@@ -181,26 +180,24 @@
                         <tr>
                             <th><: ID :></th>
                             <th><: Client ID :></th>
-                            <th><: DNS ID :></th>
                             <th><: DNS Name :></th>
                             <th><: DNS Type :></th>
                             <th><: Created :></th>
-                            <th><: Actions :></th>
+                            <th><: Action :></th>
                         </tr>
                         <% loop ListDeletedDNS %>
                         <tr>
                             <td><& dnid &></td>
                             <td><& dnuser &></td>
-                            <td><& dnsid &></td>
                             <td><& dnname &></td>
                             <td><& dntype &></td>
                             <td><& dncreated &></td>
-                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dnsid &>">
-                                <: Delete All Related :>
+                            <td><button class="button-loader btn btn-danger" type="submit" name="inDelete" id="inDelete" value="<& dnid &>">
+                                <: Delete :>
                                 </button></td>
                         </tr>
                         <input type="hidden" name="inTable" value="x_dns">
-                        <input type="hidden" name="inColumn" value="dn_vhost_fk">
+                        <input type="hidden" name="inColumn" value="dn_id_pk">
                         <input type="hidden" name="inNullCol" value="dn_deleted_ts">
                         <% endloop %>
                     </table>
@@ -701,7 +698,7 @@
     <!-- Tab Panes End --> 
 </div>
 <br />
-<@ Copyright @>
+<@ Copyright @><@ Donation @>
 </div>
 </div>
 <script>

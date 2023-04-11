@@ -1,9 +1,9 @@
 <?php
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 1.1.5
+ * Version : 2.0.0
  * Author :  TGates
- * Email :  tgates@mach-hosting.com
+ * Email :  tgates@sentora.org
  * Info : http://sentora.org
  */
 
@@ -35,11 +35,9 @@ class module_controller {
     static $clientid;
     static $resetform;
 
-/*START - Check for updates added by TGates*/
 // Module update check functions
     static function getModuleVersion() {
-        global $controller;
-
+        global $zdbh, $controller, $zlo;
         $module_path="./modules/" . $controller->GetControllerRequest('URL', 'module');
         
         // Get Update URL and Version From module.xml
@@ -47,11 +45,11 @@ class module_controller {
         $mod_config = new xml_reader(fs_filehandler::ReadFileContents($mod_xml));
         $mod_config->Parse();
         $module_version = $mod_config->document->version[0]->tagData;
-        return "v".$module_version."";
+		echo " ".$module_version."";
     }
-    
+	
     static function getCheckUpdate() {
-        global $controller;
+        global $zdbh, $controller, $zlo;
         $module_path="./modules/" . $controller->GetControllerRequest('URL', 'module');
         
         // Get Update URL and Version From module.xml
@@ -62,7 +60,7 @@ class module_controller {
         $module_version = $mod_config->document->version[0]->tagData;
 
         // Download XML in Update URL and get Download URL and Version
-        $myfile = self::getCheckRemoteXml($module_updateurl, $module_path."/" . $controller->GetControllerRequest('URL', 'module') . ".xml");
+        $myfile = check_remote_xml($module_updateurl, $module_path."/" . $controller->GetControllerRequest('URL', 'module') . ".xml");
         $update_config = new xml_reader(fs_filehandler::ReadFileContents($module_path."/" . $controller->GetControllerRequest('URL', 'module') . ".xml"));
         $update_config->Parse();
         $update_url = $update_config->document->downloadurl[0]->tagData;
@@ -72,23 +70,6 @@ class module_controller {
             return true;
         return false;
     }
-
-// Function to retrieve remote XML for update check
-    static function getCheckRemoteXml($xmlurl,$destfile){
-        $feed = simplexml_load_file($xmlurl);
-        if ($feed)
-        {
-            // $feed is valid, save it
-            $feed->asXML($destfile);
-        } elseif (file_exists($destfile)) {
-            // $feed is not valid, grab the last backup
-            $feed = simplexml_load_file($destfile);
-        } else {
-            //die('Unable to retrieve XML file');
-            echo('<div class="alert alert-danger">Unable to check for updates, your version may be outdated!.</div>');
-        }
-    }
-/*END - Check for updates added by TGates*/
 
     static function ListClients($uid = 0) {
         global $zdbh;
@@ -108,9 +89,7 @@ class module_controller {
             $res = array();
             $sql->execute();
             while ($rowclients = $sql->fetch()) {
-				// change zadmin username
-                //if ($rowclients['ac_user_vc'] != "zadmin") {
-				if ($rowclients['ac_id_pk'] != "1") {
+                if ($rowclients['ac_user_vc'] != "zadmin") {
 ;
                     $numrows = $zdbh->prepare("SELECT COUNT(*) FROM x_accounts WHERE ac_reseller_fk=:ac_id_pk AND ac_deleted_ts IS NULL");
                     $numrows->bindParam(':ac_id_pk', $rowclients['ac_id_pk']);
@@ -251,7 +230,6 @@ class module_controller {
 					'dnid' => $rowmysql['dn_id_pk'],
 					'dnuser' => $rowmysql['dn_acc_fk'],
 					'dnname' => $rowmysql['dn_name_vc'],
-					'dnsid' => $rowmysql['dn_vhost_fk'],
 					'dntype' => $rowmysql['dn_type_vc'],
 					'dncreated' => $timestamp = gmdate("Y-m-d \T-H:i:s", $rowmysql['dn_created_ts'])
 					);
@@ -391,7 +369,7 @@ class module_controller {
             $res = array();
             $sql->execute();
             while ($rowmysql = $sql->fetch()) {
-                $numrowdb = $zdbh->query("SELECT * FROM x_distlists WHERE dl_deleted_ts IS NOT NULL")->fetch();
+                $numrowdb = $zdbh->query("SELECT * FROM x_distlist WHERE dl_deleted_ts IS NOT NULL")->fetch();
                 $res[] = array(
 					'dlid' => $rowmysql['dl_id_pk'],
 					'dladdress' => $rowmysql['dl_address_vc'],
@@ -570,15 +548,8 @@ class module_controller {
 			WHERE ".$column." = :delid AND ".$delNullCol." IS NOT NULL");
         $sql->bindParam(':delid', $delid);
         $sql->execute();
-		// Remove user profile if deleting client account
-		if ($table == "ac_id_pk") {
-			$sql = $zdbh->prepare("
-			DELETE FROM x_profiles
-			WHERE ud_user_fk = :delid LIMIT 1");
-			$sql->bindParam(':delid', $delid);
-			$sql->execute();
-		}
-		self::$ok = true;
+		// add delete code to remove user's profile also (if is-user-account, del profile too)
+        self::$ok = true;
         return true;
     }
 
@@ -719,15 +690,19 @@ class module_controller {
 
     static function getCopyright() {
 		/* THIS COPYRIGHT NOTICE MAY NOT BE ALTERED IN ANY WAY OR REMOVED FOR ANY REASON WITHOUT WRITTEN PERMISSION OF THE AUTHOR. */
-        $message = '<font face="ariel" size="2">'.ui_module::GetModuleName().' &copy; 2014-'.date("Y").' by <a target="_blank" href="http://forums.sentora.org/member.php?action=profile&uid=2">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;Help support future development of this module and donate today!</font>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="DW8QTHWW4FMBY">
-<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" width="70" height="21" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>';
+        $message = '<font face="ariel" size="2">'.ui_module::GetModuleName().' v1.2.0 &copy; 2013-'.date("Y").' by <a target="_blank" href="http://forums.sentora.org/member.php?action=profile&uid=2">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;Help support future development of this module and donate today!</font>';
+
         return $message;
     }
 
+    static function getDonation() {
+        $donation = '<br />Donate to module developer: <form action="https://www.paypal.com/donate" method="post" target="_blank">
+		<input type="hidden" name="hosted_button_id" value="MCDRPGAZFNEMY" />
+		<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" height="25" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+		<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+		</form>';
+		
+        return $donation;
+    }
 }
 ?>

@@ -1,9 +1,9 @@
  <?php
 /**
  * Deleted Records Manager Module for Sentora
- * Version : 1.1.5
+ * Version : 2.0.0
  * Author :  TGates
- * Email :  tgates@mach-hosting.com
+ * Email :  tgates@sentora.org
  * Info : http://sentora.org
  */
 
@@ -19,7 +19,7 @@ require_once('dryden/fs/director.class.php');
 require_once('inc/dbc.inc.php');
 
 //First variable is the new version. Second variable is the module folder name
-UpgradeModule('115', 'deleted_records_manager');
+UpgradeModule('120', 'deleted_records_manager');
 
 function UpgradeModule($newversion, $module){
     global $zdbh;
