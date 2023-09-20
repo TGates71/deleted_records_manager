@@ -688,18 +688,21 @@ class module_controller {
         return runtime_csfr::Token();
     }
 
-    static function getCopyright() {
+    static function getCopyright()
+	{
 		/* THIS COPYRIGHT NOTICE MAY NOT BE ALTERED IN ANY WAY OR REMOVED FOR ANY REASON WITHOUT WRITTEN PERMISSION OF THE AUTHOR. */
-        $message = '<font face="ariel" size="2">'.ui_module::GetModuleName().' v1.2.0 &copy; 2013-'.date("Y").' by <a target="_blank" href="http://forums.sentora.org/member.php?action=profile&uid=2">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;Help support future development of this module and donate today!</font>';
-
-        return $message;
+        $copyright = '<font face="ariel" size="2">' . ui_module::GetModuleName() . ' v1.2.0 &copy; 2021-' . date("Y") . ' by <a target="_blank" href="#">TGates</a> for <a target="_blank" href="http://sentora.org">Sentora Control Panel</a>&nbsp;&#8212;&nbsp;' . ui_language::translate("Help support future development of this module and donate today!") . '</font> ';
+		
+        return $copyright;
     }
 
-    static function getDonation() {
-        $donation = '<br />Donate to module developer: <form action="https://www.paypal.com/donate" method="post" target="_blank">
-		<input type="hidden" name="hosted_button_id" value="MCDRPGAZFNEMY" />
-		<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" height="25" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-		<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+    static function getDonation()
+	{
+        $donation = '<br />' . ui_language::translate("Donate to module developer:") . '&nbsp;
+		<form action="https://www.paypal.com/donate" method="post" target="_blank">
+			<input type="hidden" name="hosted_button_id" value="MCDRPGAZFNEMY" />
+			<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" height="25" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+			<img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
 		</form>';
 		
         return $donation;
